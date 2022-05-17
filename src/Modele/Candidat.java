@@ -1,27 +1,29 @@
 package Modele;
 
 
+import java.util.Objects;
+
 public class Candidat {
     // création des attributs d'un candidat
     private String nom;
-    private String prenom;
     private double taille;
     private double poids;
     private double imc1;
+
+    public Candidat() {
+    }
 
     /**
      * fonction name : Candidat
      * constructeur surchargé
      *
      * @param nom
-     * @param prenom
      * @param taille
      * @param poids
      * @param imc1
      */
-    public Candidat(String nom, String prenom, double taille, double poids, double imc1) {
+    public Candidat(String nom, double taille, double poids, double imc1) {
         this.nom = nom;
-        this.prenom = prenom;
         this.taille = taille;
         this.poids = poids;
         this.imc1 = 0;
@@ -43,14 +45,6 @@ public class Candidat {
         this.nom = nom;
     }
 
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
     public double getTaille() {
         return taille;
     }
@@ -67,41 +61,18 @@ public class Candidat {
         this.poids = poids;
     }
 
-    /**
-     * function name : calculerIMC
-     * poue calculer l"imc avec différend parametre
-     * @param taille
-     * @param poids
-     * @return
-     */
-    public double calculerImc(double taille, double poids) {
-        double imc = poids / Math.pow(taille / 100, 2);
-        return imc;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Candidat)) return false;
+        Candidat candidat = (Candidat) o;
+        return Double.compare(candidat.getTaille(), getTaille()) == 0 && Double.compare(candidat.getPoids(), getPoids()) == 0 && Double.compare(candidat.getImc1(), getImc1()) == 0 && Objects.equals(getNom(), candidat.getNom());
     }
 
-    /**
-     * function names : calculeRisque
-     * pour calculer le risque
-     *
-     * @param imc
-     * @return
-     */
-    public String calculeRisque(double imc){
-        String risk =" ";
-        if (imc < 18.5){
-            risk = "Accru";
-        }else if (imc >= 18.5 && imc <= 24.9){
-            risk = "Moindre";
-        }else if (imc >= 25 && imc <= 29.9){
-            risk = "Accru";
-        }else if (imc >= 30 && imc <= 34.9){
-            risk = "Élevé";
-        }else if (imc >= 35 && imc <= 39.9){
-            risk = "Très Élevé";
-        }else if (imc >=40){
-            risk ="Extrémement Élevé";
-        }
-        return risk;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNom(), getTaille(), getPoids(), getImc1());
     }
 
     /**
@@ -112,7 +83,6 @@ public class Candidat {
     public String toString() {
         return "Candidat{" +
                 "nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
                 ", taille=" + taille +
                 ", poids=" + poids +
                 ", imc1=" + imc1 +
